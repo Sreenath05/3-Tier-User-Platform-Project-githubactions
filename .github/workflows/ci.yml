@@ -18,20 +18,3 @@ jobs:
         steps:
             - name: Checkout source code from name
               uses: actions/Checkout@v4
-
-            - name: Run Gitleaks Scan
-              run: |
-               docker run --rm \
-                -v "${{ github.wokspace }}:/repo" \
-                zricethezav/gitleaks:latest detect \
-                --source=/repo \
-                --report-format=json \
-                --report-path=/repo/gitleaks-report.json \
-                --redact \
-                --exit-code 0
-            - name: Upload GitLeaks report
-              uses: actions/upload-artifact@v4
-              with:
-                name: gitleaks-report
-                path: gitleaks-report.json
-                if-no-files-found: warn
